@@ -1,0 +1,21 @@
+How to add .gitignore
+------------------------
+Create a .gitignore file
+Add these to exclude
+.settings/
+target/
+test-output/
+.classpath
+.project
+reports/
+logs/
+screenshots/
+
+In git bash,
+git rm -r --cached .settings target test-output .classpath .project reports logs screenshots
+git commit -m "Remove files and directories from tracking as per .gitignore"
+git rm -r --cached .
+git commit -m "Reapply .gitignore rules"
+git add .
+git commit -m "msg"
+git push origin master
