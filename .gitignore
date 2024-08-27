@@ -1,8 +1,8 @@
-.settings
-/target
-/test-output
+.settings/
+target/
+test-output/
 .classpath
 .project
-/reports
-/logs
-/screenshots
+reports/
+logs/
+screenshots/
