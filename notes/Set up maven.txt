@@ -54,7 +54,7 @@ Here C:\Users\Chandan\eclipse-workspace\OpenCartV12
 Here create a file run.bat and edit it with notepad++
 cd C:\Users\Chandan\eclipse-workspace\OpenCartV12
 mvn test
-Add these lines in run.bat and save
+Add these lines in run.bat and save.
 In file, click run.bat
 
 
