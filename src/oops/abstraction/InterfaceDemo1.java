@@ -1,7 +1,18 @@
 package oops.abstraction;
 
 interface Rafale {
-	void fly();
+	int length = 1000; // final & static
+	int breadth = 2000; // final & static
+
+	void fly(); // abstract method
+
+	default void maxSpeed() {
+		System.out.println("Sukhoi is speeding");
+	}
+
+	static void minSpeed() {
+		System.out.println("Sukhoi is less speeding");
+	}
 }
 
 interface Sukhoi extends Rafale {
@@ -26,6 +37,12 @@ public class InterfaceDemo1 {
 		FighterPlane fp = new FighterPlane();
 		fp.fly();
 		fp.flip();
+
+		Rafale rf = new FighterPlane();
+		rf.maxSpeed();
+		Rafale.minSpeed();
+		
+		System.out.println(Rafale.length*Rafale.breadth);
 
 	}
 
