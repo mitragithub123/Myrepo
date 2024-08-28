@@ -1,7 +1,36 @@
+Push the code
+----------------
+git bash,
+
+Go to project structure
+git init (Create a new local repository)
+
+Only once
+git config --global user.name "Your New Name"
+git config --global user.email "yournewemail@example.com"
+
+git add . (Add all files)
+git add <filename> (Add a Specific File)
+git add <file1> <file2> <file3> (Add multiple Files)
+git add *.java (File names ending with .java)
+
+git status (Status check)
+
+git commit -m "Commit message" (Commit code in to local git repository)
+
+Only once
+git remote add origin https://github.com/mitragithub123/Myrepo.git (Connect local repository with remote)
+
+git push origin master (Push code in to remote repository)
+While doing 1st time push, it will ask token.
+Generate token from github.
+
+
 How to add .gitignore
 ------------------------
 Create a .gitignore file
 Add these to exclude
+
 .settings/
 target/
 test-output/
@@ -12,6 +41,7 @@ logs/
 screenshots/
 
 In git bash,
+--------------
 git rm -r --cached .settings target test-output .classpath .project reports logs screenshots
 git commit -m "Remove files and directories from tracking as per .gitignore"
 git rm -r --cached .
@@ -19,3 +49,15 @@ git commit -m "Reapply .gitignore rules"
 git add .
 git commit -m "msg"
 git push origin master
+
+
+
+
+
+
+
+
+
+
+
+
