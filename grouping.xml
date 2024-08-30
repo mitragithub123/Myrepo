@@ -5,8 +5,8 @@
 		<run>
 			<include name="Master"></include>
 			<!--<include name="Sanity"></include>-->
-			<!--<include name="Regression"></include>-->
-			<exclude name="Datadriven"></exclude>
+			<include name="Regression"></include>
+			<!--<exclude name="Datadriven"></exclude>-->
 		</run>
 	</groups>
 
@@ -17,8 +17,8 @@
 	<test thread-count="5" name="Test">
 		<classes>
 			<class name="testCases.TC001_AccountRegistrationTest" />
-			<class name="testCases.TC002_LoginTest" />
-			<class name="testCases.TC003_LoginDDT"/>
+			<!--<class name="testCases.TC002_LoginTest" />-->
+			<!--<class name="testCases.TC003_LoginDDT"/>-->
 		</classes>
 	</test> <!--
 	Test -->

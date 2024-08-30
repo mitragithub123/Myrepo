@@ -84,9 +84,8 @@ public class BaseTest {
 
 				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), capabilities);
 			} else {
-				logger.error("Browser not supported: " + browserName); // Change: Added error logging
-				throw new IllegalArgumentException("Unsupported browser configured"); // Change: Throw exception for
-																						// unsupported browser
+				logger.error("Browser not supported: " + browserName);
+				throw new IllegalArgumentException("Unsupported browser configured"); 																				
 			}
 		} else if ("local".equalsIgnoreCase(exeEnv)) {
 			if ("chrome".equalsIgnoreCase(browserName)) {
