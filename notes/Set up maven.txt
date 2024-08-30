@@ -60,6 +60,7 @@ In file, click run.bat
 
 
 # Running a single class (from cmd)
+Go to project location
 mvn test -Dtest=MyClassName
 mvn test -Dtest=TC001_AccountRegistrationTest
 
