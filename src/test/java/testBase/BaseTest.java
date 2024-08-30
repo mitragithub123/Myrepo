@@ -70,7 +70,7 @@ public class BaseTest {
 				// Merge options with DesiredCapabilities
 				decap.merge(options);
 
-				driver = new RemoteWebDriver(new URL("http://192.168.2.119:4444/wd/hub"), decap);
+				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), decap);
 
 			} else if (browserName.equalsIgnoreCase("firefox")) {
 				WebDriverManager.firefoxdriver().setup();
@@ -85,7 +85,7 @@ public class BaseTest {
 				// Merge options with DesiredCapabilities
 				decap.merge(options);
 
-				driver = new RemoteWebDriver(new URL("http://192.168.2.119:4444/wd/hub"), decap);
+				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), decap);
 			}
 			driver.get(property.getProperty("prodUrl"));
 		}

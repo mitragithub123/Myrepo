@@ -41,10 +41,19 @@ To stop the Selenium Grid and remove the created containers, run:
 docker-compose down
 
 -------------
+Navigate to the Directory Containing the grid JAR File
+Open cmd here
 In cmd
 java -jar selenium-server-4.23.1.jar standalone
-------------
+A Url will be generated
+http://192.168.2.173:4444 (Open this in browser)
+Match this url in BaseTest
+Run testng.xml
+
+To stop server, in cmd: CTRL+C
+--------------------
 Reference
+
 https://www.youtube.com/watch?v=XB550hmwzLM&t=3154s
 https://www.youtube.com/watch?v=T7PjgtSpX-o&t=2321s
 
