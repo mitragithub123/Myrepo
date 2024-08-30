@@ -63,7 +63,7 @@ Execute the command:
 docker-compose up
 
 Verify Selenium Grid:
-Open Chrome and navigate to: http://localhost:4444/grid/console
+Open Chrome and navigate to: http://localhost:4444/grid/console ( Get this from Docker Desktop)
 This page will show the status of the Selenium Grid hub and nodes.
 
 Scale the Number of Nodes:

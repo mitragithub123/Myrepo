@@ -32,104 +32,96 @@ public class BaseTest {
 
 	@BeforeClass(groups = { "Regression", "Master", "Sanity", "Datadriven" })
 	public void setup() throws IOException {
+		// Load properties
 		FileInputStream file = new FileInputStream(".\\src\\test\\resources\\config.properties");
 		property = new Properties();
 		property.load(file);
-		String browserName = property.getProperty("browser1");
+		file.close();
 
+		// Initialize logger
 		logger = LogManager.getLogger(this.getClass());
 
-		if (property.getProperty("exeEnv").equalsIgnoreCase("remote")) {
-			DesiredCapabilities decap = new DesiredCapabilities();
+		String browserName = property.getProperty("browser1", "chrome"); // Default to chrome if not specified
+		String exeEnv = property.getProperty("exeEnv", "local"); // Default to local if not specified
 
-			// OS
-			if (property.getProperty("os1").equalsIgnoreCase("windows")) {
-				decap.setPlatform(Platform.WIN10);
-			} else if (property.getProperty("os2").equalsIgnoreCase("linux")) {
-				decap.setPlatform(Platform.LINUX);
-			} else if (property.getProperty("os2").equalsIgnoreCase("mac")) {
-				decap.setPlatform(Platform.MAC);
+		if ("remote".equalsIgnoreCase(exeEnv)) {
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+
+			// Set platform
+			String os = property.getProperty("os1");
+			if (os == null)
+				os = property.getProperty("os2");
+			if (os == null)
+				os = property.getProperty("os3");
+
+			if ("windows".equalsIgnoreCase(os)) {
+				capabilities.setPlatform(Platform.WIN10);
+			} else if ("linux".equalsIgnoreCase(os)) {
+				capabilities.setPlatform(Platform.LINUX);
+			} else if ("mac".equalsIgnoreCase(os)) {
+				capabilities.setPlatform(Platform.MAC);
 			} else {
-				System.out.println("No matching OS");
-				return;
+				throw new IllegalArgumentException("Unsupported OS configured");
 			}
 
-			// Browser
-			if (browserName.equalsIgnoreCase("chrome")) {
+			// Set browser
+			if ("chrome".equalsIgnoreCase(browserName)) {
 				WebDriverManager.chromedriver().setup();
-
-				// Set ChromeOptions
 				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--start-maximized");
-				options.addArguments("--disable-notifications");
-				options.addArguments("--incognito");
+				options.addArguments("--start-maximized", "--disable-notifications", "--incognito");
 				options.setAcceptInsecureCerts(true);
 				options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 				options.setExperimentalOption("useAutomationExtension", false);
+				capabilities.merge(options);
 
-				// Merge options with DesiredCapabilities
-				decap.merge(options);
-
-				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), decap);
-
-			} else if (browserName.equalsIgnoreCase("firefox")) {
+				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), capabilities);
+			} else if ("firefox".equalsIgnoreCase(browserName)) {
 				WebDriverManager.firefoxdriver().setup();
-
-				// Set FirefoxOptions
 				FirefoxOptions options = new FirefoxOptions();
-				options.addArguments("--start-maximized");
-				options.addArguments("--disable-notifications");
-				options.addArguments("--private");
+				options.addArguments("--start-maximized", "--disable-notifications", "--private");
 				options.setAcceptInsecureCerts(true);
+				capabilities.merge(options);
 
-				// Merge options with DesiredCapabilities
-				decap.merge(options);
-
-				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), decap);
+				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), capabilities);
+			} else {
+				logger.error("Browser not supported: " + browserName); // Change: Added error logging
+				throw new IllegalArgumentException("Unsupported browser configured"); // Change: Throw exception for
+																						// unsupported browser
 			}
-			driver.get(property.getProperty("prodUrl"));
-		}
-
-		if (property.getProperty("exeEnv").equalsIgnoreCase("local")) {
-			if (browserName.equalsIgnoreCase("chrome")) {
+		} else if ("local".equalsIgnoreCase(exeEnv)) {
+			if ("chrome".equalsIgnoreCase(browserName)) {
 				WebDriverManager.chromedriver().setup();
-
-				// Set ChromeOptions
 				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--start-maximized"); // Start Chrome in a maximized window
-				options.addArguments("--disable-notifications"); // Disable browser notifications
-				options.addArguments("--incognito"); // Opens browser in incognito mode
-				options.setAcceptInsecureCerts(true); // Accept insecure certificates
-				// Remove "Chrome is being controlled by automated test software" message
+				options.addArguments("--start-maximized", "--disable-notifications", "--incognito");
+				options.setAcceptInsecureCerts(true);
 				options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 				options.setExperimentalOption("useAutomationExtension", false);
-				// options.addArguments("--headless"); // Run Chrome in headless mode (if
-				// needed)
-
-				driver = new ChromeDriver(options); // Initialize WebDriver with ChromeOptions
-			}
-
-			else if (browserName.equalsIgnoreCase("firefox")) {
+				driver = new ChromeDriver(options);
+			} else if ("firefox".equalsIgnoreCase(browserName)) {
 				WebDriverManager.firefoxdriver().setup();
-
-				// Set FirefoxOptions
 				FirefoxOptions options = new FirefoxOptions();
-				options.addArguments("--start-maximized"); // Start Firefox in a maximized window
-				options.addArguments("--disable-notifications"); // Disable browser notifications
-				options.addArguments("--private"); // Opens browser in private mode
-				options.setAcceptInsecureCerts(true); // Accept insecure certificates
-
+				options.addArguments("--start-maximized", "--disable-notifications", "--private");
+				options.setAcceptInsecureCerts(true);
 				driver = new FirefoxDriver(options);
+			} else {
+				logger.error("Browser not supported: " + browserName);
+				throw new IllegalArgumentException("Unsupported browser configured");
 			}
-			driver.get(property.getProperty("prodUrl"));
+		} else {
+			logger.error("Execution environment not supported: " + exeEnv);
+			throw new IllegalArgumentException("Unsupported execution environment configured");
 		}
+
+		driver.get(property.getProperty("prodUrl"));
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	}
 
 	@AfterClass(groups = { "Regression", "Master", "Sanity", "Datadriven" })
 	public void teardown() {
-		driver.quit();
+		if (driver != null) {
+			driver.quit();
+		}
 	}
 
 	public String randomString() {
@@ -151,7 +143,6 @@ public class BaseTest {
 	public static String captureScreenshot(WebDriver driver) throws IOException {
 		File screenshotsDir = new File(System.getProperty("user.dir") + File.separator + "screenshots");
 		screenshotsDir.mkdirs(); // Create directory if it doesn't exist
-
 		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String screenshotName = "screenshot" + System.currentTimeMillis() + ".png";
 		File destinationFile = new File(screenshotsDir, screenshotName);
