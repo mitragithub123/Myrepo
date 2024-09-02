@@ -101,6 +101,14 @@ public class ExtentListener implements ITestListener {
 		if (consoleOutput != null && !consoleOutput.isEmpty()) {
 			test.log(Status.PASS, "Console Output: <pre>" + consoleOutput + "</pre>");
 		}
+		
+		// Attach video recording link
+		File videoFile = BaseTest.getVideoFile();
+		if (videoFile != null && videoFile.exists()) {
+			String videoPath = videoFile.getAbsolutePath();
+			String videoLink = "<a href='file:///" + videoPath.replace("\\", "/") + "'>View Video</a>";
+			test.info("Screen Recording: " + videoLink);
+		}
 
 		// Stop capturing console output
 		ConsoleOutputCapture.stopCapture();
@@ -123,6 +131,15 @@ public class ExtentListener implements ITestListener {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		
+		// Attach video recording link
+		File videoFile = BaseTest.getVideoFile();
+		if (videoFile != null && videoFile.exists()) {
+			String videoPath = videoFile.getAbsolutePath();
+			String videoLink = "<a href='file:///" + videoPath.replace("\\", "/") + "'>View Video</a>";
+			test.info("Screen Recording: " + videoLink);
+		}
+        
 		// Log captured console output
 		String consoleOutput = ConsoleOutputCapture.getCapturedOutput();
 		if (consoleOutput != null && !consoleOutput.isEmpty()) {
@@ -148,6 +165,14 @@ public class ExtentListener implements ITestListener {
 		test.assignCategory(result.getMethod().getGroups()); // To display groups in reports
 		test.log(Status.SKIP,
 				MarkupHelper.createLabel("Name of the skipped test case is: " + result.getName(), ExtentColor.ORANGE));
+		
+		// Attach video recording link
+        File videoFile = BaseTest.getVideoFile();
+        if (videoFile != null && videoFile.exists()) {
+            String videoPath = videoFile.getAbsolutePath();
+            String videoLink = "<a href='file:///" + videoPath.replace("\\", "/") + "'>View Video</a>";
+            test.info("Screen Recording: " + videoLink);
+        }
 
 		// Stop capturing console output
 		ConsoleOutputCapture.stopCapture();

@@ -168,32 +168,36 @@ public class BaseTest {
 	}
 
 	// Method to start screen recording
-	private void startScreenRecording() throws Exception {
+	public void startScreenRecording() throws Exception {
 		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
 		File screenRecordingsDir = new File(System.getProperty("user.dir") + File.separator + "screenRecordings");
-		File movieFile = new File(screenRecordingsDir, "TestRecording_" + timeStamp + ".avi");
+		videoFile = new File(screenRecordingsDir, "TestRecording_" + timeStamp + ".avi");
 
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDefaultConfiguration();
-		this.screenRecorder = new ScreenRecorder(gc, gc.getBounds(),
+		screenRecorder = new ScreenRecorder(gc, gc.getBounds(),
 				new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
 				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
 						CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
 						Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
 				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),
-				null, movieFile);
-		this.screenRecorder.start();
+				null, videoFile);
+		screenRecorder.start();
 	}
 
 	// Method to stop screen recording
-	private void stopScreenRecording() {
+	public void stopScreenRecording() {
 		try {
-			if (this.screenRecorder != null) {
-				this.screenRecorder.stop();
+			if (screenRecorder != null) {
+				screenRecorder.stop();
 			}
 		} catch (Exception e) {
 			logger.error("Failed to stop screen recording: " + e.getMessage());
 		}
 	}
+	
+	public static File getVideoFile() {
+        return videoFile;
+    }
 
 }
