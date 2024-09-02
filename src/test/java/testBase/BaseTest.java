@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,16 +24,25 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
+import static org.monte.media.FormatKeys.*;
+import static org.monte.media.FormatKeys.MIME_AVI;
+import static org.monte.media.VideoFormatKeys.*;
+import java.awt.*;
+import org.monte.media.Format;
+import org.monte.media.math.Rational;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
 	public static WebDriver driver;
 	public Logger logger;
 	public Properties property;
+	public static ScreenRecorder screenRecorder;
+	public static File videoFile;
 
 	@BeforeClass(groups = { "Regression", "Master", "Sanity", "Datadriven" })
-	public void setup() throws IOException {
+	public void setup() throws Exception {
 		// Load properties
 		FileInputStream file = new FileInputStream(".\\src\\test\\resources\\config.properties");
 		property = new Properties();
@@ -43,6 +54,9 @@ public class BaseTest {
 
 		String browserName = property.getProperty("browser1", "chrome"); // Default to chrome if not specified
 		String exeEnv = property.getProperty("exeEnv", "local"); // Default to local if not specified
+
+		// Start screen recording
+		startScreenRecording();
 
 		if ("remote".equalsIgnoreCase(exeEnv)) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -85,7 +99,7 @@ public class BaseTest {
 				driver = new RemoteWebDriver(new URL("http://192.168.2.173:4444/wd/hub"), capabilities);
 			} else {
 				logger.error("Browser not supported: " + browserName);
-				throw new IllegalArgumentException("Unsupported browser configured"); 																				
+				throw new IllegalArgumentException("Unsupported browser configured");
 			}
 		} else if ("local".equalsIgnoreCase(exeEnv)) {
 			if ("chrome".equalsIgnoreCase(browserName)) {
@@ -117,10 +131,12 @@ public class BaseTest {
 	}
 
 	@AfterClass(groups = { "Regression", "Master", "Sanity", "Datadriven" })
-	public void teardown() {
+	public void teardown() throws IOException {
 		if (driver != null) {
 			driver.quit();
 		}
+		// Stop screen recording
+		stopScreenRecording();
 	}
 
 	public String randomString() {
@@ -150,4 +166,34 @@ public class BaseTest {
 
 		return destinationFile.getAbsolutePath();
 	}
+
+	// Method to start screen recording
+	private void startScreenRecording() throws Exception {
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+		File screenRecordingsDir = new File(System.getProperty("user.dir") + File.separator + "screenRecordings");
+		File movieFile = new File(screenRecordingsDir, "TestRecording_" + timeStamp + ".avi");
+
+		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration();
+		this.screenRecorder = new ScreenRecorder(gc, gc.getBounds(),
+				new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
+				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+						CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
+						Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
+				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),
+				null, movieFile);
+		this.screenRecorder.start();
+	}
+
+	// Method to stop screen recording
+	private void stopScreenRecording() {
+		try {
+			if (this.screenRecorder != null) {
+				this.screenRecorder.stop();
+			}
+		} catch (Exception e) {
+			logger.error("Failed to stop screen recording: " + e.getMessage());
+		}
+	}
+
 }
