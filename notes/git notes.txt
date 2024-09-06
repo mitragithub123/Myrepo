@@ -25,6 +25,8 @@ git push origin master (Push code in to remote repository)
 While doing 1st time push, it will ask token.
 Generate token from github.
 
+git pull origin master --allow-unrelated-histories
+
 
 How to add .gitignore
 ------------------------
