@@ -52,7 +52,13 @@ git add .
 git commit -m "msg"
 git push origin master
 
-
+***
+If screenshots folder is not added in .gitignore. Now it is pushed to live
+Then add screenshots in .gitignore
+in git bash,
+git rm -r --cached screenshots/
+git commit -am "Stop tracking screenshots folder and add to .gitignore"  (Commit in one step)
+git push origin master
 
 
 
