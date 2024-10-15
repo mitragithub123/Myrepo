@@ -115,13 +115,25 @@ List all local branches & remote branches
 ---------------------------------------------
 git branch -a
 
+Use Cases for git stash
+--------------------------
+--You are working on a feature and need to switch to another branch to fix a bug but have uncommitted changes.
+git stash
+git checkout bugfix-branch
+# After fixing the bug, return to the feature branch
+git checkout feature-branch
+git stash pop
 
+--You need to pull changes from the remote repository but have uncommitted local changes.
+git stash
+git pull origin main
+git stash pop
 
+git stash list (View a list of stashed changes)
+ 
+git stash pop stash@{0} (Reapply a specific stash (e.g., the first one))
 
-
-
-
-
+git stash clear (Remove all stashes)
 
 
 
