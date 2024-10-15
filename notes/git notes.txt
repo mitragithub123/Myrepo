@@ -89,10 +89,14 @@ Rename the current (checked-out) branch
 -------------------------------------------
 git checkout your-branch-name
 git branch -m new-branch-name
+git push origin new-branch-name
+git push origin --delete new-branch-name
 
 Rename a different branch
 --------------------------
 git branch -m old-branch-name new-branch-name
+git push origin new-branch-name
+git push origin --delete new-branch-name
 
 Delete a remote branch
 -----------------------------------------
