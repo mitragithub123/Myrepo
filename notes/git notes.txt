@@ -53,12 +53,74 @@ git commit -m "msg"
 git push origin master
 
 ***
-If screenshots folder is not added in .gitignore. Now it is pushed to live
+If screenshots folder is not added in .gitignore. Now it is pushed to live.
 Then add screenshots in .gitignore
 in git bash,
 git rm -r --cached screenshots/
 git commit -am "Stop tracking screenshots folder and add to .gitignore"  (Commit in one step)
 git push origin master
+
+
+Revert a commit
+------------------
+git log --oneline (Revert the commit locally)
+git revert bfc6827/git revert HEAD (If you're reverting the most recent commit)
+git push origin branch-name (Push the revert commit to the remote)
+git log --oneline (Verifying the change)
+
+
+Write your commit message: If you are okay with the auto-generated commit message
+(which looks like Revert "Comments add"), you can proceed with saving and exiting the editor.
+
+Save and exit the editor (Vim steps):
+
+Press Esc to ensure you're in command mode.
+Type :wq and press Enter.
+This will save the commit message and close the editor, completing the revert operation.
+
+
+Reset a commit
+------------------
+git log --oneline
+git reset --hard bfc6827
+git push origin <branch-name> --force
+
+Rename the current (checked-out) branch
+-------------------------------------------
+git checkout your-branch-name
+git branch -m new-branch-name
+
+Rename a different branch
+--------------------------
+git branch -m old-branch-name new-branch-name
+
+Delete a remote branch
+-----------------------------------------
+git push origin --delete branch-name
+
+Delete a local branch
+------------------------
+git branch -d branch-name (If the branch has already been merged with another branch, like master or main)
+git branch -D branch-name (If the branch hasn’t been merged and you still want to delete it)
+
+List all local branches
+--------------------------
+git branch
+
+List all remote branches
+--------------------------
+git branch -r
+
+List all local branches & remote branches
+---------------------------------------------
+git branch -a
+
+
+
+
+
+
+
 
 
 
