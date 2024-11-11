@@ -1,11 +1,12 @@
 package collection.list;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class LinkedListExample {
 
 	public static void main(String[] args) {
-		LinkedList<String> fruits = new LinkedList<String>();
+		LinkedList<String> fruits = new LinkedList<>();
 
 		/* Adding elements to the LinkedList */
 		fruits.add("Apple");
@@ -33,7 +34,11 @@ public class LinkedListExample {
 		fruits.remove("Watermelon");
 		System.out.println("LinkedList after removal: " + fruits);
 
+		// Change the value
+		fruits.set(1, "Dragon fruit");
+
 		/* Checking if the list contains an element */
+		System.out.println(fruits.contains("Cherry"));
 		boolean isPresent = fruits.contains("Apple");
 		System.out.println(isPresent);
 
@@ -47,9 +52,17 @@ public class LinkedListExample {
 			System.out.println(fruit);
 		}
 
+		/* Another approach */
+		Iterator<String> itr = fruits.iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+
 		/* Clearing all elements */
 		fruits.clear();
 		System.out.println("LinkedList after clearing: " + fruits);
+
+		System.out.println(fruits.isEmpty());
 
 	}
 
