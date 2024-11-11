@@ -1,6 +1,7 @@
 package collection.list;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArrayListExample {
 
@@ -47,6 +48,13 @@ public class ArrayListExample {
 		// or,
 		for (String fruit : fruits) {
 			System.out.println(fruit);
+		}
+
+		// or,
+		Iterator<String> itr = fruits.iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+
 		}
 
 		// Checking if ArrayList Contains an Element
