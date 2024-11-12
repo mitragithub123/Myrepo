@@ -59,7 +59,13 @@ public class DataProviders {
 	}
 	
 	// Login data provider using json
-	@DataProvider(name = "loginDataJson")
+	// Parallel=true -> Test data will run parallellly not sequentially.
+	// If parallel is used then run from .xml file
+	// If all test data will run parallely then it may display unexpected test result
+	// So, use data-provider-thread-count="2" at suite level in xml file
+	// 2 means 2 will be run parallel
+	// indices = {0,1}: 1st 2 data will run else will skip 
+	@DataProvider(name = "loginDataJson", parallel = true, indices = {0,1})
 	public Object[][] getLoginDataUsingJson() throws IOException {
 		List<HashMap<String, String>> data = JsonDataReader.getJsonDataToMap(".\\testData\\login.json");
 
