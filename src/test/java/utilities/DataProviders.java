@@ -9,7 +9,14 @@ import org.testng.annotations.DataProvider;
 
 public class DataProviders {
 	// Login data provider using excel file
-	@DataProvider(name = "LoginData")
+	// Parallel=true -> Test data will run parallellly not sequentially.
+	// If parallel is used then run from .xml file
+	// If all test data will run parallely then it may display unexpected test
+	// result
+	// So, use data-provider-thread-count="2" at suite level in xml file
+	// 2 means 2 will be run parallel
+	// indices = {0,1}: 1st 2 data will run else will skip
+	@DataProvider(name = "LoginData", parallel = true, indices = { 0, 1 })
 	public String[][] getData() throws IOException {
 		String path = ".\\testData\\loginData.xlsx";
 		ExcelUtility xlUtil = new ExcelUtility(path);
@@ -59,13 +66,7 @@ public class DataProviders {
 	}
 	
 	// Login data provider using json
-	// Parallel=true -> Test data will run parallellly not sequentially.
-	// If parallel is used then run from .xml file
-	// If all test data will run parallely then it may display unexpected test result
-	// So, use data-provider-thread-count="2" at suite level in xml file
-	// 2 means 2 will be run parallel
-	// indices = {0,1}: 1st 2 data will run else will skip 
-	@DataProvider(name = "loginDataJson", parallel = true, indices = {0,1})
+	@DataProvider(name = "loginDataJson")
 	public Object[][] getLoginDataUsingJson() throws IOException {
 		List<HashMap<String, String>> data = JsonDataReader.getJsonDataToMap(".\\testData\\login.json");
 
