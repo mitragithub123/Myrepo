@@ -18,7 +18,7 @@ public class LinkedHashSetExample {
 			System.out.println(itr.next());
 
 		}
-		System.out.println("Test 2");
+		System.out.println("Test 3");
 
 	}
 
