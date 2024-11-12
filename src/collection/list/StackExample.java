@@ -14,6 +14,10 @@ public class StackExample {
 		stack.push(50);
 		stack.push(60);
 		System.out.println(stack);
+		
+		/* Finds the position of an element in the stack, starting from the top */
+		int position = stack.search(10);
+		System.out.println("Position of 10: " + position);
 
 		/* Peeking at the top element */
 		int topElement = stack.peek();
@@ -44,7 +48,6 @@ public class StackExample {
 
 		/* Using an enhanced for loop */
 		System.out.println("\nUsing an enhanced for loop:");
-		System.out.println("\nUsing an iterator:");
 		for (Integer number : stack) {
 			System.out.println(number);
 		}
