@@ -55,10 +55,10 @@ public class StackExample {
 		while (iterator.hasNext()) {
 			System.out.println(iterator.next());
 		}
-		
+
 		/* Clearing the stack */
-        stack.clear();
-        System.out.println("Stack after clearing: " + stack);
+		stack.clear();
+		System.out.println("Stack after clearing: " + stack);
 
 	}
 }
