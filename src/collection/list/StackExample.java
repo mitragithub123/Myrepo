@@ -32,14 +32,6 @@ public class StackExample {
 		boolean isEmpty = stack.isEmpty();
 		System.out.println(isEmpty);
 
-		/* Searching for an element in the stack */
-		int searchedElement = stack.search(10);
-		if (searchedElement != -1) {
-			System.out.println("Element Found");
-		} else {
-			System.out.println("Element not Found");
-		}
-
 		/* Using a for loop with get(index) */
 		System.out.println("\nUsing an for loop:");
 		for (int i = 0; i < stack.size(); i++) {
