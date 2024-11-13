@@ -7,8 +7,8 @@ interface Cab4 {
 
 public class Test4 {
 	public static void main(String[] args) {
-		Cab4 ob = (String source, String destination) ->
-				   System.out.println("Ola cab is booked from " + source + " to " + destination);
+		Cab4 ob = (source, destination) -> System.out
+				.println("Ola cab is booked from " + source + " to " + destination);
 		ob.bookCab("Delhi", "Mumbai");
 	}
 
