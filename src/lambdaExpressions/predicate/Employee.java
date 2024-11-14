@@ -32,7 +32,6 @@ public class Employee {
 				System.out.println(e.ename + " " + e.salary);
 			}
 		}
-
 	}
 
 }
