@@ -12,6 +12,7 @@ public class Demo1 {
 
 		List<List<Integer>> finalList = Arrays.asList(list1, list2, list3);
 		List<Integer> finalResult = finalList.stream().flatMap(s -> s.stream()).collect(Collectors.toList());
+		//List<Integer> finalResult = finalList.stream().flatMap(List::stream).collect(Collectors.toList());
 		System.out.println(finalResult);
 	}
 }
