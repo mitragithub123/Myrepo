@@ -25,7 +25,7 @@ public class Demo {
 			    new Employee(104, "David", 40000),
 			    new Employee(105, "Edward", 50000)
 			);
-		employeesList.stream().filter(e->e.salary>20000).map(e->e.salary).forEach(System.out::println);
+			employeesList.stream().filter(e -> e.salary > 20000).map(e -> e.salary).forEach(System.out::println);
 		
 	}
 
