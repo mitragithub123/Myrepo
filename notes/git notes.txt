@@ -143,10 +143,10 @@ git stash clear (Remove all stashes)
 To go to a specific commit, inspect the changes, and then apply those changes to your current branch
 ----------------------------------------------------------------------------------------------------
 git log
-git checkout <commit-hash>
-git show <commit-hash>
 git checkout <your-branch-name>
+
 git cherry-pick <commit-hash>
+
 git add <file-with-conflict>
 git cherry-pick --continue/ git cherry-pick --abort
 
