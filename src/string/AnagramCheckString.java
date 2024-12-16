@@ -17,6 +17,12 @@ public class AnagramCheckString {
 
 		boolean isAnagram = Arrays.equals(charArray1, charArray2);
 		System.out.println("Strings are Anagrams: " + isAnagram);
+		// or
+		if (Arrays.equals(charArray1, charArray2)) {
+			System.out.println("Strings are Anagrams: true");
+		} else {
+			System.out.println("Strings are Anagrams: false");
+		}
 
 	}
 
